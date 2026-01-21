@@ -9,11 +9,11 @@ export default function TodoList({ todos, onToggleComplete }: TodoListProps) {
 	return (
 		<>
 			<h1>List</h1>
-			<div className="flex flex-col">
+			<div className="m-50 flex flex-col">
 				{todos.map((todo) => (
 					<div
 						key={todo.id}
-						className="border p-3 text-xl"
+						className="flex items-center border p-3 text-xl"
 					>
 						<input
 							type="checkbox"
@@ -25,7 +25,7 @@ export default function TodoList({ todos, onToggleComplete }: TodoListProps) {
 						/>
 						<label
 							htmlFor={todo.id}
-							className={`ml-3 ${todo.complete ? 'text-gray-400' : ''}`}
+							className={`flex-1 text-center ${todo.complete ? 'text-gray-400' : ''}`}
 						>
 							{todo.text}
 						</label>
