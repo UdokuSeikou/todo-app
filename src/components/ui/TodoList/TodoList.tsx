@@ -5,6 +5,7 @@ interface TodoListProps {
 	onToggleComplete: (id: Todo['id']) => void;
 }
 
+// Todo配列の内容をリスト表示する
 export default function TodoList({ todos, onToggleComplete }: TodoListProps) {
 	return (
 		<>
@@ -13,7 +14,7 @@ export default function TodoList({ todos, onToggleComplete }: TodoListProps) {
 				{todos.map((todo) => (
 					<div
 						key={todo.id}
-						className="flex items-center border p-3 text-xl"
+						className="m-0.5 flex items-center rounded-2xl border border-blue-300 p-3 text-xl"
 					>
 						<input
 							type="checkbox"
@@ -21,7 +22,7 @@ export default function TodoList({ todos, onToggleComplete }: TodoListProps) {
 							id={todo.id}
 							checked={todo.complete}
 							onChange={() => onToggleComplete(todo.id)}
-							className="h-4 w-4"
+							className="ml-3 h-4 w-4"
 						/>
 						<label
 							htmlFor={todo.id}
@@ -29,6 +30,9 @@ export default function TodoList({ todos, onToggleComplete }: TodoListProps) {
 						>
 							{todo.text}
 						</label>
+						<div className="mr-3.5">
+							{todo.deadline.toLocaleDateString()}
+						</div>
 					</div>
 				))}
 			</div>
