@@ -7,6 +7,7 @@ import type { Todo } from '../types/todo';
 export default function Index() {
 	const [todoList, setTodoList] = useState(todos);
 
+	// チェックボックスのクリックによって、完了状態をトグルで切り替える
 	const onToggleComplete = (id: Todo['id']) => {
 		setTodoList(
 			todoList.map((todo) =>
@@ -14,6 +15,7 @@ export default function Index() {
 			),
 		);
 	};
+
 	return (
 		<>
 			<TodoList
