@@ -5,7 +5,8 @@ import userEvent from '@testing-library/user-event';
 
 import AddTodo from './AddTodo';
 
-const mockTextInput = '新しいTodoを入力';
+const placeholderText = '新しいTodoを入力';
+const textInput = '入力';
 
 describe('AddTodo コンポーネント', () => {
 	describe('textの内容をtodo配列に追加する', () => {
@@ -15,15 +16,15 @@ describe('AddTodo コンポーネント', () => {
 			render(<AddTodo sendText={mockSendText} />);
 
 			// 入力フィールドにテキストを入力
-			const input = screen.getByPlaceholderText('新しいTodoを入力');
-			await user.type(input, mockTextInput);
+			const input = screen.getByPlaceholderText(placeholderText);
+			await user.type(input, textInput);
 
 			// Addボタンをクリック
 			const addButton = screen.getByRole('button');
 			await user.click(addButton);
 
 			// sendTextが正しい引数で呼ばれたことを確認
-			expect(mockSendText).toHaveBeenCalledWith(mockTextInput);
+			expect(mockSendText).toHaveBeenCalledWith(textInput);
 		});
 
 		test('Addボタンをクリックしたら、sendTextが呼ばれる', async () => {
@@ -32,15 +33,15 @@ describe('AddTodo コンポーネント', () => {
 			render(<AddTodo sendText={mockSendText} />);
 
 			// 入力フィールドにテキストを入力
-			const input = screen.getByPlaceholderText('新しいTodoを入力');
-			await user.type(input, mockTextInput);
+			const input = screen.getByPlaceholderText(placeholderText);
+			await user.type(input, textInput);
 
 			// Addボタンをクリック
 			const addButton = screen.getByRole('button', { name: 'Add' });
 			await user.click(addButton);
 
 			// sendTextが呼ばれたことを確認
-			expect(mockSendText).toHaveBeenCalledWith(mockTextInput);
+			expect(mockSendText).toHaveBeenCalledWith(textInput);
 		});
 
 		test('sendTextが呼ばれた後、textInputの中身はリセットされる', async () => {
@@ -49,8 +50,8 @@ describe('AddTodo コンポーネント', () => {
 			render(<AddTodo sendText={mockSendText} />);
 
 			// 入力フィールドにテキストを入力
-			const input = screen.getByPlaceholderText('新しいTodoを入力');
-			await user.type(input, 'リセットテスト');
+			const input = screen.getByPlaceholderText(placeholderText);
+			await user.type(input, textInput);
 
 			// Addボタンをクリック
 			const addButton = screen.getByRole('button', { name: 'Add' });
@@ -75,12 +76,28 @@ describe('AddTodo コンポーネント', () => {
 			render(<AddTodo sendText={mockSendText} />);
 
 			// スペースのみを入力
-			const input = screen.getByPlaceholderText('新しいTodoを入力');
+			const input = screen.getByPlaceholderText(placeholderText);
 			await user.type(input, '   ');
 
 			// Addボタンが非活性であることを確認
 			const addButton = screen.getByRole('button', { name: 'Add' });
 			expect(addButton).toBeDisabled();
+		});
+
+		test('Enterキーが入力されたとき、textの内容を送信する', async () => {
+			const mockSendText = vi.fn();
+			const user = userEvent.setup();
+			render(<AddTodo sendText={mockSendText} />);
+
+			// 入力フィールドにテキストを入力
+			const input = screen.getByPlaceholderText(placeholderText);
+			await user.type(input, textInput);
+
+			// Enterキーが入力されると送信される
+			await user.keyboard('{Enter}');
+
+			// sendTextが正しい引数で呼ばれたことを確認
+			expect(mockSendText).toHaveBeenCalledWith(textInput);
 		});
 	});
 });
