@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
 import TodoList from '../components/ui/TodoList/TodoList';
+import AddTodo from '../components/ui/AddTodo/AddTodo';
+
 import { todos } from '../mock';
 import type { Todo } from '../types/todo';
 
@@ -16,12 +18,28 @@ export default function Index() {
 		);
 	};
 
+	const sendText = (text: Todo['text']) => {
+		const newTodo: Todo = {
+			id: `${self.crypto.randomUUID()}`,
+			text: text,
+			complete: false,
+			// 仮で現在時刻を入力、後で修正
+			deadline: new Date(),
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		};
+		setTodoList([...todoList, newTodo]);
+	};
+
 	return (
 		<>
-			<TodoList
-				todos={todoList}
-				onToggleComplete={onToggleComplete}
-			/>
+			<div>
+				<TodoList
+					todos={todoList}
+					onToggleComplete={onToggleComplete}
+				/>
+				<AddTodo sendText={sendText} />
+			</div>
 		</>
 	);
 }
