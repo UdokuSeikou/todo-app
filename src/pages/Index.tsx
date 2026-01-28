@@ -33,7 +33,7 @@ export default function Index() {
 
 	return (
 		<>
-			<div>
+			<div className="flex h-screen flex-col">
 				<TodoList
 					todos={todoList}
 					onToggleComplete={onToggleComplete}
