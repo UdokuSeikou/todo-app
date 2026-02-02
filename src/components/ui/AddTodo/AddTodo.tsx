@@ -45,14 +45,17 @@ export default function AddTodo({ sendText }: AddTodoProps) {
 	};
 
 	return (
-		<form onSubmit={(e) => handleSubmit(e)}>
+		<form
+			onSubmit={(e) => handleSubmit(e)}
+			className="flex items-center justify-center"
+		>
 			<div className="m-3 flex items-center justify-center">
 				<input
 					type="text"
 					name="textInput"
 					id="textInput"
 					placeholder="新しいTodoを入力"
-					className="border border-blue-300 p-4"
+					className="h-15 w-xl flex-auto rounded-2xl border border-blue-300 p-4"
 					onChange={(e) => handlerOnChange(e)}
 					onKeyDown={(e) => handlerOnKeyDown(e)}
 					value={textValue}
@@ -60,7 +63,7 @@ export default function AddTodo({ sendText }: AddTodoProps) {
 				<button
 					type="submit"
 					disabled={isDisabled}
-					className="ml-3.5 h-10 w-20 bg-blue-400"
+					className={`ml-3.5 h-10 w-20 rounded-2xl font-bold text-white ${isDisabled ? 'bg-blue-200' : 'bg-blue-400'} `}
 				>
 					Add
 				</button>
